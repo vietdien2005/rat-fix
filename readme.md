@@ -1,4 +1,4 @@
-# Rat Fix
+# Rat Fix 🐁
 
 > This is a simple script that remap the side button of the mouse and reverse the scroll direction
 
@@ -7,7 +7,7 @@
 - I hate macOS, but I can't switch to another one because of work reasons. It is very difficult to customize mouse or keyboard shortcuts comfortably on MacOS, except by using some third-party software. However, using those software often installs many unnecessary features and carries significant security risks.
 - So, the idea is to create a simple script that has only the specific functionality I need (hopefully, you too ^^! )
 - It has been an interesting experience because I didn't know much about the MacOS operating system, Objective C language, or device functions. Previously, I used the `mac-mouse-fix` software, but it had quite a few bugs and was no longer free. Therefore, I decided to learn and read the code from the `mac-mouse-fix` repo, and I gained a lot of knowledge from it.
-- If you want an easy life, just spend $10 to buy mac-mouse-fix. But if you're up for a challenging adventure, keep reading below and fine-tune my script to fit your needs.
+- If you want an easy life, just spend $10 to buy `mac-mouse-fix`. But if you're up for a challenging adventure, keep reading below and fine-tune my script to fit your needs.
 
 ## Features
 
