@@ -13,12 +13,20 @@
 //      4. sendOutputEvents
 
 CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon) {
-    NSUInteger buttonNum = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber);
-    // NSLog(@"Button Number: %ld", buttonNum);
+    NSUInteger ButtonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber);
+    // NSLog(@"Button Number: %ld", ButtonNumber);
 
-    switch (buttonNum) {
+    switch (ButtonNumber) {
         case 0:
             {
+                // keep touchpad
+                // Events: https://developer.apple.com/documentation/coregraphics/cgeventfield/scrollwheeleventmomentumphase
+                int64_t ScrollPhase = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
+                int64_t MomentumPhase = CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase);
+                if (ScrollPhase > 0 || MomentumPhase > 0) {
+                    return event;
+                }
+
                 int64_t DeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
                 int64_t PointDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
                 int64_t FixedPtDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
@@ -27,8 +35,7 @@ CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef eve
                 CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, -PointDeltaAxis1);
                 CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, -FixedPtDeltaAxis1);
 
-                // Debug
-                // NSLog(@"DeltaAxis1: %lld | PointDeltaAxis1: %lld | FixedPtDeltaAxis1: %lld ", DeltaAxis1, PointDeltaAxis1, FixedPtDeltaAxis1);
+                // NSLog(@"ScrollPhase: %lld | MomentumPhase: %lld ", ScrollPhase, MomentumPhase);
 
                 return event;
             }
@@ -37,14 +44,14 @@ CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef eve
                 // Sample code: https://github.com/noah-nuebling/mac-mouse-fix/blob/master/Helper/Core/Actions/Actions.m#L39
                 // https://github.com/noah-nuebling/mac-mouse-fix/blob/master/App/UI/Main/Tabs/ButtonTab/RemapTable/RemapTableTranslator.m#L199
                 postSymbolicHotkey(79); // Move Left Space
-                NSLog(@"Button: %ld - Move Left", buttonNum);
+                NSLog(@"Button: %ld - Move Left", ButtonNumber);
 
                 return nil;
             }
         case 4:
             {
                 postSymbolicHotkey(81); // Move Right Space
-                NSLog(@"Button: %ld - Move Right", buttonNum);
+                NSLog(@"Button: %ld - Move Right", ButtonNumber);
 
                 return nil;
             }
